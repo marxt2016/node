@@ -1,3 +1,5 @@
+//node timer.js "December 31, 2021 12:23:00"
+
 const moment = require("moment");
 const EventEmmiter = require("events");
 const emitter = new EventEmmiter();
@@ -31,31 +33,38 @@ const runTimer = (date) => {
 };
 
 class Handler {
-  static start(payload) {
+  static async start(payload) {
     console.log("Start timer", payload.start.payload);
     const momentTo = payload.end.payload;
     const momentFrom = payload.start.payload;
     const interval = 1000;
     let diffTime = momentTo - momentFrom;
-    let interv = setInterval(() => {
-      diffTime = diffTime - interval;
-      if (diffTime < 1000) {
-        emitter.emit(payload.end.type, interv);
-        return console.log("It's Now!");
-      }
-      let duration = moment.duration(diffTime);
-      console.log(
-        "left",
-        Math.floor(moment.duration(diffTime).asDays()),
-        "Days",
-        duration.get("hours"),
-        "Hours",
-        duration.get("minutes"),
-        "Minutes",
-        duration.get("seconds"),
-        "Seconds"
-      );
-    }, interval);
+
+    await new Promise((resolve) => {
+      const interv = setInterval(() => {
+        diffTime = diffTime - interval;
+        const calculateResult = () => {
+          const duration = moment.duration(diffTime);
+          console.log(
+            "left",
+            Math.floor(moment.duration(diffTime).asDays()),
+            "Days",
+            duration.get("hours"),
+            "Hours",
+            duration.get("minutes"),
+            "Minutes",
+            duration.get("seconds"),
+            "Seconds"
+          );
+        };
+        if (diffTime < 1000) {
+          emitter.emit(payload.end.type, interv);
+          console.log("It's now!");
+        } else {
+          resolve(calculateResult());
+        }
+      }, interval);
+    });
   }
 
   static end(payload) {
@@ -66,5 +75,6 @@ class Handler {
 emitter.on("start", Handler.start);
 emitter.on("end", Handler.end);
 emitter.on("error", console.log);
-//node timer.js "December 12, 2021 12:23:00"
+
+//node timer.js "December 31, 2021 12:23:00"
 runTimer(date);
