@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/marxt2016/node#readme",
   "dependencies": {
-    "colors": "^1.4.0"
+    "colors": "^1.4.0",
+    "moment": "^2.29.1"
   },
   "description": ""
 }
