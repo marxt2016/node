@@ -26,6 +26,12 @@ for (let i = 0; i < IP.length; i++) {
       `An error occured while WRITING to the file. Error: ${error.message}`
     );
   });
+
+  outputStream.on("finish", () => {
+    console.log(`Over with ${IP[i]}`);
+  });
+
+  outputStream.end();
 }
 
 inputStream.on("error", (error) => {
