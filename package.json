@@ -1,0 +1,24 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marxt2016/node.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marxt2016/node/issues"
+  },
+  "homepage": "https://github.com/marxt2016/node#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "moment": "^2.29.1"
+  },
+  "description": ""
+}
