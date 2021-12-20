@@ -3,8 +3,9 @@ const fs = require("fs");
 const path = require("path");
 const inquirer = require("inquirer");
 const readline = require("readline");
-
 const executionDir = process.cwd();
+
+// command for execution = reader
 
 inquirer
   .prompt([
@@ -47,7 +48,7 @@ inquirer
               ])
               .then(({ search }) => {
                 if (search.length === 0) {
-                  return console.log("Empty search string given");
+                  return console.log("Empty search string was given");
                 }
                 const fullPath = path.join(dirName, fileName);
                 const data = fs.createReadStream(fullPath, "utf-8");
