@@ -1,10 +1,13 @@
 {
   "name": "node",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./cli_homework.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node cli_homework.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "reader": "./cli_homework.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +21,9 @@
   "homepage": "https://github.com/marxt2016/node#readme",
   "dependencies": {
     "colors": "^1.4.0",
-    "moment": "^2.29.1"
+    "inquirer": "^8.2.0",
+    "moment": "^2.29.1",
+    "yargs": "^17.3.0"
   },
   "description": ""
 }
