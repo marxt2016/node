@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Socket</title>
+  </head>
+  <body>
+    <h1>Socket.io</h1>
+    <div id="counter"></div>
+    <input type="text" id="input" autofocus />
+    <button id="button">Send</button>
+    <div id="messages"></div>
+    <script
+      src="https://cdn.socket.io/4.4.0/socket.io.min.js"
+      integrity="sha384-1fOn6VtTq3PWwfsOrk45LnYcGosJwzMHv+Xh/Jx5303FVOXzEnw0EpLv30mtjmlj"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const socket = io("localhost:5555");
+      const counter = document.querySelector("#counter");
+      const messagesBlock = document.querySelector("#messages");
+      const sendButton = document.querySelector("#button");
+      const input = document.querySelector("#input");
+      let data = {};
+      sendButton.addEventListener("click", () => {
+        data = {
+          message: input.value,
+          id: "",
+        };
+        socket.emit("client-msg", data);
+        input.value = "";
+      });
+
+      socket.on("connect", () => {
+        data.message = "User " + socket.id + " connected! ";
+        socket.emit("connect-user", data);
+      });
+
+      socket.on("server-msg", (data) => {
+        messagesBlock.insertAdjacentHTML("afterbegin", `<div>${data.id ? data.id : "Server said"}: ${data.message}</div>`);
+      });
+      socket.on("update-counter", (data) => {
+        counter.innerHTML = "";
+        counter.insertAdjacentHTML("afterbegin", `<div>Number of users connected ${Object.keys(data).length}</div>`);
+      });
+    </script>
+  </body>
+</html>
